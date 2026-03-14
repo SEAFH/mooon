@@ -8,10 +8,10 @@ module.exports = function handler(req, res) {
     return;
   }
 
-  // 2. Trả về HTML nguyên bản (Sử dụng nháy đơn để bao bọc, tránh lỗi Syntax)
+  // 2. Trả về HTML nguyên bản 100% không qua xử lý chuỗi
   res.setHeader('Content-Type', 'text/html; charset=utf-8');
   
-  const html = `<!DOCTYPE html>
+  const rawHtml = `<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -374,8 +374,7 @@ module.exports = function handler(req, res) {
   </div>
 </div>
 </body>
-</html>`.replace(/\`/g, '\\`'); // Đây là dòng quan trọng để không bị lỗi 500
+</html>`.replace(/\\`/g, '\\\\`'); // Cách duy nhất để tránh lỗi Syntax Node.js
 
-  res.status(200).send(html);
+  res.status(200).send(rawHtml);
 };
-
