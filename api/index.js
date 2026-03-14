@@ -133,8 +133,8 @@ module.exports = function handler(req, res) {
 
   /* Logo */
   .logo {
-    width: 500px;
-    height: 500px;
+    width: 250px;
+    height: 250px;
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -146,14 +146,14 @@ module.exports = function handler(req, res) {
   }
 
   .logo svg {
-    width: 500px;
-    height: 500px;
+    width: 250px;
+    height: 250px;
   }
 
   /* Title */
   h1 {
     font-family: 'Courier Prime', monospace;
-    font-size: clamp(7rem, 16vw, 10rem);
+    font-size: clamp(3rem, 8vw, 5rem);
     font-weight: 700;
     letter-spacing: -0.02em;
     color: var(--text);
@@ -180,7 +180,7 @@ module.exports = function handler(req, res) {
 
   .code-block code {
     font-family: 'Space Mono', monospace;
-    font-size: 1.56rem;
+    font-size: 0.9rem;
     color: #ccc;
     letter-spacing: 0.01em;
     white-space: nowrap;
@@ -206,7 +206,7 @@ module.exports = function handler(req, res) {
 
   /* Description */
   .description {
-    font-size: 1.8rem;
+    font-size: 1rem;
     line-height: 1.75;
     color: #cccccc;
     max-width: 600px;
@@ -233,12 +233,12 @@ module.exports = function handler(req, res) {
 
   .btn {
     display: inline-block;
-    padding: 14px 28px;
+    padding: 20px 40px;
     border: 1.5px solid var(--text);
     background: transparent;
     color: var(--text);
     font-family: 'Space Mono', monospace;
-    font-size: 1.64rem;
+    font-size: 1rem;
     font-weight: 700;
     letter-spacing: 0.03em;
     text-decoration: none;
@@ -293,7 +293,7 @@ module.exports = function handler(req, res) {
   }
 
   .footer-links a {
-    font-size: 1.4rem;
+    font-size: 0.9rem;
     letter-spacing: 0.08em;
     color: var(--muted);
     text-decoration: none;
@@ -312,7 +312,7 @@ module.exports = function handler(req, res) {
 
   /* Copyright */
   .copyright {
-    font-size: 1.3rem;
+    font-size: 0.8rem;
     color: var(--muted);
     letter-spacing: 0.1em;
     text-transform: uppercase;
