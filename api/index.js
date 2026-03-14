@@ -133,8 +133,8 @@ module.exports = function handler(req, res) {
 
   /* Logo */
   .logo {
-    width: 250px;
-    height: 250px;
+    width: 500px;
+    height: 500px;
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -146,14 +146,14 @@ module.exports = function handler(req, res) {
   }
 
   .logo svg {
-    width: 250px;
-    height: 250px;
+    width: 500px;
+    height: 500px;
   }
 
   /* Title */
   h1 {
     font-family: 'Courier Prime', monospace;
-    font-size: clamp(3.5rem, 8vw, 5rem);
+    font-size: clamp(7rem, 16vw, 10rem);
     font-weight: 700;
     letter-spacing: -0.02em;
     color: var(--text);
@@ -180,7 +180,7 @@ module.exports = function handler(req, res) {
 
   .code-block code {
     font-family: 'Space Mono', monospace;
-    font-size: 0.78rem;
+    font-size: 1.56rem;
     color: #ccc;
     letter-spacing: 0.01em;
     white-space: nowrap;
@@ -206,7 +206,7 @@ module.exports = function handler(req, res) {
 
   /* Description */
   .description {
-    font-size: 0.9rem;
+    font-size: 1.8rem;
     line-height: 1.75;
     color: #cccccc;
     max-width: 600px;
@@ -238,7 +238,7 @@ module.exports = function handler(req, res) {
     background: transparent;
     color: var(--text);
     font-family: 'Space Mono', monospace;
-    font-size: 0.82rem;
+    font-size: 1.64rem;
     font-weight: 700;
     letter-spacing: 0.03em;
     text-decoration: none;
@@ -293,7 +293,7 @@ module.exports = function handler(req, res) {
   }
 
   .footer-links a {
-    font-size: 0.7rem;
+    font-size: 1.4rem;
     letter-spacing: 0.08em;
     color: var(--muted);
     text-decoration: none;
@@ -307,12 +307,12 @@ module.exports = function handler(req, res) {
 
   .footer-links .sep {
     color: var(--border);
-    font-size: 0.7rem;
+    font-size: 1.4rem;
   }
 
   /* Copyright */
   .copyright {
-    font-size: 0.65rem;
+    font-size: 1.3rem;
     color: var(--muted);
     letter-spacing: 0.1em;
     text-transform: uppercase;
