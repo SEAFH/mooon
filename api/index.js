@@ -111,7 +111,7 @@ export default function handler(req, res) {
     <p class="tagline">the only <span id="game-name">The Forge</span> script you'll need</p>
     <div class="code-box">
       <span class="code-text">
-        <span class="kw">loadstring</span>(game:<span class="kw">HttpGet</span>(<span class="str">"https://moon-hub-eight.vercel.app"</span>))()
+        <span class="kw">loadstring</span>(game:<span class="kw">HttpGet</span>(<span class="str">"https://getmoonhub.vercel.app"</span>))()
       </span>
       <button class="copy-btn" title="Copy" onclick="copyCode(this)">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
