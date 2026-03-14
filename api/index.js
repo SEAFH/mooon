@@ -124,7 +124,7 @@ module.exports = function handler(req, res) {
     position: relative;
     z-index: 1;
     max-width: 860px;
-    padding: 80px 60px 60px;
+    padding: 100px 80px 80px;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -133,31 +133,31 @@ module.exports = function handler(req, res) {
 
   /* Logo */
   .logo {
-    width: 220px;
-    height: 220px;
+    width: 275px;
+    height: 275px;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: 50px;
+    margin-bottom: 60px;
     opacity: 0;
     animation: fadeUp 0.6s ease forwards 0.1s;
     background: transparent;
   }
 
   .logo svg {
-    width: 220px;
-    height: 220px;
+    width: 275px;
+    height: 275px;
   }
 
   /* Title */
   h1 {
     font-family: 'Courier Prime', monospace;
-    font-size: clamp(4rem, 10vw, 7rem);
+    font-size: clamp(5rem, 12.5vw, 8.75rem);
     font-weight: 700;
     letter-spacing: -0.02em;
     color: var(--text);
-    margin-bottom: 35px;
+    margin-bottom: 45px;
     opacity: 0;
     animation: fadeUp 0.6s ease forwards 0.2s;
     line-height: 1.1;
@@ -170,8 +170,8 @@ module.exports = function handler(req, res) {
     justify-content: space-between;
     background: rgba(255,255,255,0.04);
     border: 1.5px solid var(--border);
-    padding: 16px 20px;
-    margin-bottom: 50px;
+    padding: 20px 24px;
+    margin-bottom: 60px;
     max-width: 620px;
     overflow: hidden;
     opacity: 0;
@@ -180,7 +180,7 @@ module.exports = function handler(req, res) {
 
   .code-block code {
     font-family: 'Space Mono', monospace;
-    font-size: 0.9rem;
+    font-size: 1.1rem;
     color: #ccc;
     letter-spacing: 0.01em;
     white-space: nowrap;
@@ -206,11 +206,11 @@ module.exports = function handler(req, res) {
 
   /* Description */
   .description {
-    font-size: 1.1rem;
-    line-height: 1.8;
+    font-size: 1.4rem;
+    line-height: 1.9;
     color: #cccccc;
     max-width: 600px;
-    margin-bottom: 50px;
+    margin-bottom: 60px;
     opacity: 0;
     animation: fadeUp 0.6s ease forwards 0.35s;
     letter-spacing: 0.01em;
@@ -225,20 +225,20 @@ module.exports = function handler(req, res) {
   .buttons {
     display: flex;
     flex-wrap: wrap;
-    gap: 16px;
-    margin-bottom: 60px;
+    gap: 20px;
+    margin-bottom: 70px;
     opacity: 0;
     animation: fadeUp 0.6s ease forwards 0.5s;
   }
 
   .btn {
     display: inline-block;
-    padding: 20px 40px;
+    padding: 25px 50px;
     border: 1.5px solid var(--text);
     background: transparent;
     color: var(--text);
     font-family: 'Space Mono', monospace;
-    font-size: 1rem;
+    font-size: 1.25rem;
     font-weight: 700;
     letter-spacing: 0.03em;
     text-decoration: none;
@@ -285,15 +285,15 @@ module.exports = function handler(req, res) {
   .footer-links {
     display: flex;
     flex-wrap: wrap;
-    gap: 10px;
+    gap: 14px;
     align-items: center;
-    margin-bottom: 35px;
+    margin-bottom: 45px;
     opacity: 0;
     animation: fadeUp 0.6s ease forwards 0.65s;
   }
 
   .footer-links a {
-    font-size: 0.9rem;
+    font-size: 1.1rem;
     letter-spacing: 0.08em;
     color: var(--muted);
     text-decoration: none;
@@ -312,7 +312,7 @@ module.exports = function handler(req, res) {
 
   /* Copyright */
   .copyright {
-    font-size: 0.8rem;
+    font-size: 1rem;
     color: var(--muted);
     letter-spacing: 0.1em;
     text-transform: uppercase;
