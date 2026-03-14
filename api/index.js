@@ -1,14 +1,14 @@
 module.exports = function handler(req, res) {
   const ua = req.headers['user-agent'] || '';
 
-  // 1. Nếu là từ Roblox (để chạy script executor)
+  // 1. Nếu là từ Roblox
   if (ua.includes('Roblox')) {
     res.setHeader('Content-Type', 'text/plain; charset=utf-8');
     res.status(200).send('loadstring(game:HttpGet("https://api.jnkie.com"))()');
     return;
   }
 
-  // 2. Trả về toàn bộ giao diện HTML cho trình duyệt
+  // 2. Trả về HTML cho trình duyệt (Đã xử lý escape dấu backtick)
   res.setHeader('Content-Type', 'text/html; charset=utf-8');
   res.status(200).send(`<!DOCTYPE html>
 <html lang="en">
@@ -16,7 +16,7 @@ module.exports = function handler(req, res) {
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>moon™</title>
-<link href="https://fonts.googleapis.com" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet">
 <style>
   :root {
     --bg: #0d0a14;
@@ -129,15 +129,19 @@ module.exports = function handler(req, res) {
   .logo {
     width: 180px;
     height: 180px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     margin-bottom: 40px;
     opacity: 0;
     animation: fadeUp 0.6s ease forwards 0.1s;
   }
 
   .logo img {
-    width: 100%;
-    height: auto;
-    filter: drop-shadow(0 0 10px var(--accent));
+    width: 180px;
+    height: 180px;
+    object-fit: contain;
   }
 
   h1 {
@@ -164,6 +168,7 @@ module.exports = function handler(req, res) {
   }
 
   .code-block code {
+    font-family: 'Space Mono', monospace;
     font-size: 0.78rem;
     color: #ccc;
     white-space: nowrap;
@@ -177,16 +182,14 @@ module.exports = function handler(req, res) {
     color: var(--muted);
     cursor: pointer;
     margin-left: 12px;
-    transition: color 0.15s;
   }
 
-  .copy-btn:hover, .copy-btn.copied { color: var(--accent); }
+  .copy-btn:hover { color: var(--accent); }
 
   .description {
     font-size: 0.9rem;
     line-height: 1.75;
     color: #cccccc;
-    max-width: 600px;
     margin-bottom: 44px;
     opacity: 0;
     animation: fadeUp 0.6s ease forwards 0.35s;
@@ -207,10 +210,21 @@ module.exports = function handler(req, res) {
     text-decoration: none;
     font-weight: 700;
     transition: all 0.18s ease;
-    background: transparent;
   }
 
-  .btn:hover { background: var(--accent); border-color: var(--accent); color: #000; }
+  .btn:hover {
+    background: var(--accent);
+    color: #000;
+    border-color: var(--accent);
+  }
+
+  .scanlines {
+    position: fixed;
+    inset: 0;
+    background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.03) 2px, rgba(0,0,0,0.03) 4px);
+    pointer-events: none;
+    z-index: 2;
+  }
 
   @keyframes fadeUp {
     from { opacity: 0; transform: translateY(16px); }
@@ -219,51 +233,46 @@ module.exports = function handler(req, res) {
 </style>
 </head>
 <body>
-
 <canvas id="particles"></canvas>
 <div class="glow-orb"></div>
 <div class="grid-floor"></div>
+<div class="scanlines"></div>
 
 <div class="container">
   <div class="logo">
-    <img src="https://via.placeholder.com" alt="Logo">
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABgAAAAQACAYAAAAncZJCAAEAAElEQVR4nOz96Zts13XfeX7X3udE5HBHjMRMDBTnSbQsa7As2ZKqXe22XV39oqvr6X76r+g/qrqf9lNV3a5yuUseSpZMDZREiTMJkgBBELgA7pQ3MyPO2Xv1i73PEJGRdyBIECB+Hz2XkRlx5jgRSqy191ogIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiI">
   </div>
 
-  <h1>moon<span style="color: var(--accent)">.lua</span></h1>
-
+  <h1>moon™</h1>
+  
   <div class="description">
-    Hệ thống tối ưu hóa cho trải nghiệm tốt nhất. Nhấn nút bên dưới để sao chép script thực thi.
+    Welcome to <span class="highlight">moon™</span> project.
   </div>
 
   <div class="code-block">
-    <code id="script-code">_G.Key = "YOUR_KEY"; loadstring(game:HttpGet("https://api.jnkie.com..."))()</code>
-    <button class="copy-btn" onclick="copyScript(this)">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+    <code id="script-text">loadstring(game:HttpGet("https://api.jnkie.com..."))()</code>
+    <button class="copy-btn" id="copy-btn">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
     </button>
   </div>
 
   <div class="buttons">
     <a href="#" class="btn">DISCORD</a>
-    <a href="#" class="btn">DOCUMENTATION</a>
+    <a href="#" class="btn">GET KEY</a>
   </div>
 </div>
 
 <script>
-  // Đã sửa dấu backtick thành nháy đơn ở đây để tránh lỗi 500
-  function copyScript(btn) {
-    const text = document.getElementById('script-code').innerText;
-    navigator.clipboard.writeText(text).then(() => {
-      const originalSVG = btn.innerHTML;
-      btn.classList.add('copied');
-      btn.innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>';
-      setTimeout(() => {
-        btn.classList.remove('copied');
-        btn.innerHTML = originalSVG;
-      }, 2000);
-    });
-  }
+  const copyBtn = document.getElementById('copy-btn');
+  copyBtn.addEventListener('click', () => {
+    const text = document.getElementById('script-text').innerText;
+    navigator.clipboard.writeText(text);
+    
+    const originalSVG = copyBtn.innerHTML;
+    copyBtn.innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>';
+    setTimeout(() => { copyBtn.innerHTML = originalSVG; }, 2000);
+  });
 
-  // Hiệu ứng Particles đơn giản
   const canvas = document.getElementById('particles');
   const ctx = canvas.getContext('2d');
   let particles = [];
@@ -272,34 +281,32 @@ module.exports = function handler(req, res) {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
     particles = [];
-    for(let i=0; i<50; i++) {
+    for(let i=0; i<60; i++) {
       particles.push({
         x: Math.random() * canvas.width,
         y: Math.random() * canvas.height,
         size: Math.random() * 2,
-        speed: Math.random() * 0.5 + 0.2
+        speed: Math.random() * 0.5 + 0.1
       });
     }
   }
 
   function animate() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.fillStyle = 'rgba(199, 125, 255, 0.5)';
+    ctx.clearRect(0,0, canvas.width, canvas.height);
+    ctx.fillStyle = 'rgba(199, 125, 255, 0.4)';
     particles.forEach(p => {
       p.y -= p.speed;
-      if (p.y < 0) p.y = canvas.height;
+      if(p.y < 0) p.y = canvas.height;
       ctx.beginPath();
-      ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+      ctx.arc(p.x, p.y, p.size, 0, Math.PI*2);
       ctx.fill();
     });
     requestAnimationFrame(animate);
   }
-
   window.addEventListener('resize', init);
   init();
   animate();
 </script>
-
 </body>
 </html>`);
 };
