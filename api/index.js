@@ -124,7 +124,7 @@ module.exports = function handler(req, res) {
     position: relative;
     z-index: 1;
     max-width: 860px;
-    padding: 60px 50px 40px;
+    padding: 30px 25px 20px;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -133,21 +133,21 @@ module.exports = function handler(req, res) {
 
   /* Logo */
   .logo {
-    width: 250px;
-    height: 250px;
+    width: 180px;
+    height: 180px;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: 40px;
+    margin-bottom: 20px;
     opacity: 0;
     animation: fadeUp 0.6s ease forwards 0.1s;
     background: transparent;
   }
 
   .logo svg {
-    width: 250px;
-    height: 250px;
+    width: 180px;
+    height: 180px;
   }
 
   /* Title */
@@ -170,8 +170,8 @@ module.exports = function handler(req, res) {
     justify-content: space-between;
     background: rgba(255,255,255,0.04);
     border: 1.5px solid var(--border);
-    padding: 14px 18px;
-    margin-bottom: 44px;
+    padding: 10px 14px;
+    margin-bottom: 20px;
     max-width: 620px;
     overflow: hidden;
     opacity: 0;
@@ -207,10 +207,10 @@ module.exports = function handler(req, res) {
   /* Description */
   .description {
     font-size: 1rem;
-    line-height: 1.75;
+    line-height: 1.5;
     color: #cccccc;
     max-width: 600px;
-    margin-bottom: 44px;
+    margin-bottom: 20px;
     opacity: 0;
     animation: fadeUp 0.6s ease forwards 0.35s;
     letter-spacing: 0.01em;
@@ -225,8 +225,8 @@ module.exports = function handler(req, res) {
   .buttons {
     display: flex;
     flex-wrap: wrap;
-    gap: 12px;
-    margin-bottom: 56px;
+    gap: 10px;
+    margin-bottom: 30px;
     opacity: 0;
     animation: fadeUp 0.6s ease forwards 0.5s;
   }
@@ -285,9 +285,9 @@ module.exports = function handler(req, res) {
   .footer-links {
     display: flex;
     flex-wrap: wrap;
-    gap: 6px;
+    gap: 4px;
     align-items: center;
-    margin-bottom: 28px;
+    margin-bottom: 15px;
     opacity: 0;
     animation: fadeUp 0.6s ease forwards 0.65s;
   }
