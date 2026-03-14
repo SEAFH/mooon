@@ -378,7 +378,7 @@ module.exports = function handler(req, res) {
 
   <!-- Description -->
   <p class="description">
-    moon™ is a keyless and free script. Even though it is free and keyless, we still try to make the script because we just want everyone to be able to open and use it without having to get a key in a <span class="highlight">tiring</span> way.
+    moon™ is a free, fast, and easy-to-use key-getting script that won't take much time. <span class="highlight">time</span> way.
   </p>
 
   <!-- Code block -->
@@ -392,11 +392,11 @@ module.exports = function handler(req, res) {
   </div>
 
   <!-- Buttons -->
-  <div class="buttons">
-    <a href="https://getmoonhub.vercel.app/support.html" class="btn" target="_blank">Support Game</a>
-    <a href="https://getmoonhub.vercel.app/faq.html" class="btn" target="_blank">FAQ</a>
-    <a href="https://getmoonhub.vercel.app/features.html" class="btn" target="_blank">Features</a>
-  </div>
+<div class="buttons">
+  <a href="/support.html" class="btn">Support Game</a>
+  <a href="/faq.html" class="btn">FAQ</a>
+  <a href="/features.html" class="btn">Features</a>
+</div>
 
   <!-- Copyright -->
   <p class="copyright">© 2025 MOON™</p>
