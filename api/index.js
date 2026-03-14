@@ -124,7 +124,7 @@ module.exports = function handler(req, res) {
     position: relative;
     z-index: 1;
     max-width: 860px;
-    padding: 30px 25px 20px;
+    padding: 80px 60px 60px;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -133,31 +133,31 @@ module.exports = function handler(req, res) {
 
   /* Logo */
   .logo {
-    width: 180px;
-    height: 180px;
+    width: 220px;
+    height: 220px;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: 20px;
+    margin-bottom: 50px;
     opacity: 0;
     animation: fadeUp 0.6s ease forwards 0.1s;
     background: transparent;
   }
 
   .logo svg {
-    width: 180px;
-    height: 180px;
+    width: 220px;
+    height: 220px;
   }
 
   /* Title */
   h1 {
     font-family: 'Courier Prime', monospace;
-    font-size: clamp(3rem, 8vw, 5rem);
+    font-size: clamp(4rem, 10vw, 7rem);
     font-weight: 700;
     letter-spacing: -0.02em;
     color: var(--text);
-    margin-bottom: 28px;
+    margin-bottom: 35px;
     opacity: 0;
     animation: fadeUp 0.6s ease forwards 0.2s;
     line-height: 1.1;
@@ -170,8 +170,8 @@ module.exports = function handler(req, res) {
     justify-content: space-between;
     background: rgba(255,255,255,0.04);
     border: 1.5px solid var(--border);
-    padding: 10px 14px;
-    margin-bottom: 20px;
+    padding: 16px 20px;
+    margin-bottom: 50px;
     max-width: 620px;
     overflow: hidden;
     opacity: 0;
@@ -206,11 +206,11 @@ module.exports = function handler(req, res) {
 
   /* Description */
   .description {
-    font-size: 1rem;
-    line-height: 1.5;
+    font-size: 1.1rem;
+    line-height: 1.8;
     color: #cccccc;
     max-width: 600px;
-    margin-bottom: 20px;
+    margin-bottom: 50px;
     opacity: 0;
     animation: fadeUp 0.6s ease forwards 0.35s;
     letter-spacing: 0.01em;
@@ -225,8 +225,8 @@ module.exports = function handler(req, res) {
   .buttons {
     display: flex;
     flex-wrap: wrap;
-    gap: 10px;
-    margin-bottom: 30px;
+    gap: 16px;
+    margin-bottom: 60px;
     opacity: 0;
     animation: fadeUp 0.6s ease forwards 0.5s;
   }
@@ -285,9 +285,9 @@ module.exports = function handler(req, res) {
   .footer-links {
     display: flex;
     flex-wrap: wrap;
-    gap: 4px;
+    gap: 10px;
     align-items: center;
-    margin-bottom: 15px;
+    margin-bottom: 35px;
     opacity: 0;
     animation: fadeUp 0.6s ease forwards 0.65s;
   }
