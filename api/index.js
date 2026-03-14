@@ -380,7 +380,7 @@ export default function handler(req, res) {
 
   <!-- Code block -->
   <div class="code-block">
-    <code id="loadstring">loadstring(game:HttpGet("https://getmoonhub.vercel.app"))()</code>
+    <code id="loadstring">loadstring(game:HttpGet("https://moon-hub-studio.vercel.app"))()</code>
     <button class="copy-btn" onclick="copyCode()" title="Copy">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
@@ -390,9 +390,9 @@ export default function handler(req, res) {
 
   <!-- Buttons -->
   <div class="buttons">
-    <a href="https://getmoonhub.vercel.app/support" class="btn" target="_blank">Support Game</a>
-    <a href="https://getmoonhub.vercel.app/faq" class="btn" target="_blank">FAQ</a>
-    <a href="https://getmoonhub.vercel.app/features" class="btn" target="_blank">Features</a>
+    <a href="https://moon-hub-studio.vercel.app/support" class="btn" target="_blank">Support Game</a>
+    <a href="https://moon-hub-studio.vercel.app/faq" class="btn" target="_blank">FAQ</a>
+    <a href="https://moon-hub-studio.vercel.app/features" class="btn" target="_blank">Features</a>
   </div>
 
   <!-- Copyright -->
