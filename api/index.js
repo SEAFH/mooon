@@ -393,9 +393,9 @@ module.exports = function handler(req, res) {
 
   <!-- Buttons -->
   <div class="buttons">
-    <a href="https://getmoonhub.vercel.app/support" class="btn" target="_blank">Support Game</a>
-    <a href="https://getmoonhub.vercel.app/faq" class="btn" target="_blank">FAQ</a>
-    <a href="https://getmoonhub.vercel.app/features" class="btn" target="_blank">Features</a>
+    <a href="https://getmoonhub.vercel.app/support.html" class="btn" target="_blank">Support Game</a>
+    <a href="https://getmoonhub.vercel.app/faq.html" class="btn" target="_blank">FAQ</a>
+    <a href="https://getmoonhub.vercel.app/features.html" class="btn" target="_blank">Features</a>
   </div>
 
   <!-- Copyright -->
