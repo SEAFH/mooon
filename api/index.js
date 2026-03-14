@@ -133,8 +133,8 @@ module.exports = function handler(req, res) {
 
   /* Logo */
   .logo {
-    width: 180px;
-    height: 180px;
+    width: 250px;
+    height: 250px;
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -146,14 +146,14 @@ module.exports = function handler(req, res) {
   }
 
   .logo svg {
-    width: 180px;
-    height: 180px;
+    width: 250px;
+    height: 250px;
   }
 
   /* Title */
   h1 {
     font-family: 'Courier Prime', monospace;
-    font-size: clamp(2rem, 5vw, 3.2rem);
+    font-size: clamp(3.5rem, 8vw, 5rem);
     font-weight: 700;
     letter-spacing: -0.02em;
     color: var(--text);
