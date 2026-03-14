@@ -378,7 +378,7 @@ module.exports = function handler(req, res) {
 
   <!-- Description -->
   <p class="description">
-    moon™ is a free, fast, and easy-to-use key-getting script that won't take much time. <span class="highlight">time</span> way.
+    moon™ is a free, fast, and easy-to-use key-getting script that won't take much <span class="highlight">time</span> .
   </p>
 
   <!-- Code block -->
