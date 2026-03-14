@@ -8,15 +8,16 @@ module.exports = function handler(req, res) {
     return;
   }
 
-  // 2. Trả về HTML cho trình duyệt (Đã xử lý escape dấu backtick)
+  // 2. Trả về HTML nguyên bản (Sử dụng nháy đơn để bao bọc, tránh lỗi Syntax)
   res.setHeader('Content-Type', 'text/html; charset=utf-8');
-  res.status(200).send(`<!DOCTYPE html>
+  
+  const html = `<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>moon™</title>
-<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com" rel="stylesheet">
 <style>
   :root {
     --bg: #0d0a14;
@@ -39,6 +40,7 @@ module.exports = function handler(req, res) {
     position: relative;
   }
 
+  /* Grid background */
   body::before {
     content: '';
     position: fixed;
@@ -80,6 +82,7 @@ module.exports = function handler(req, res) {
     100% { background-position: 0 60px; }
   }
 
+  /* Floating particles canvas */
   #particles {
     position: fixed;
     inset: 0;
@@ -87,6 +90,7 @@ module.exports = function handler(req, res) {
     z-index: 0;
   }
 
+  /* Pulsing ambient glow */
   .glow-orb {
     position: fixed;
     width: 500px;
@@ -106,6 +110,7 @@ module.exports = function handler(req, res) {
     50%       { opacity: 1;   transform: translate(-50%, -50%) scale(1.2); }
   }
 
+  /* Radial vignette */
   body::after {
     content: '';
     position: fixed;
@@ -126,6 +131,7 @@ module.exports = function handler(req, res) {
     justify-content: center;
   }
 
+  /* Logo */
   .logo {
     width: 180px;
     height: 180px;
@@ -136,24 +142,28 @@ module.exports = function handler(req, res) {
     margin-bottom: 40px;
     opacity: 0;
     animation: fadeUp 0.6s ease forwards 0.1s;
+    background: transparent;
   }
 
-  .logo img {
+  .logo svg {
     width: 180px;
     height: 180px;
-    object-fit: contain;
   }
 
+  /* Title */
   h1 {
     font-family: 'Courier Prime', monospace;
     font-size: clamp(2rem, 5vw, 3.2rem);
     font-weight: 700;
+    letter-spacing: -0.02em;
     color: var(--text);
     margin-bottom: 28px;
     opacity: 0;
     animation: fadeUp 0.6s ease forwards 0.2s;
+    line-height: 1.1;
   }
 
+  /* Code block */
   .code-block {
     display: flex;
     align-items: center;
@@ -163,6 +173,7 @@ module.exports = function handler(req, res) {
     padding: 14px 18px;
     margin-bottom: 44px;
     max-width: 620px;
+    overflow: hidden;
     opacity: 0;
     animation: fadeUp 0.6s ease forwards 0.42s;
   }
@@ -171,6 +182,7 @@ module.exports = function handler(req, res) {
     font-family: 'Space Mono', monospace;
     font-size: 0.78rem;
     color: #ccc;
+    letter-spacing: 0.01em;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -181,22 +193,38 @@ module.exports = function handler(req, res) {
     border: none;
     color: var(--muted);
     cursor: pointer;
+    padding: 4px;
+    display: flex;
+    align-items: center;
+    transition: color 0.15s;
+    flex-shrink: 0;
     margin-left: 12px;
   }
 
   .copy-btn:hover { color: var(--accent); }
+  .copy-btn.copied { color: var(--accent); }
 
+  /* Description */
   .description {
     font-size: 0.9rem;
     line-height: 1.75;
     color: #cccccc;
+    max-width: 600px;
     margin-bottom: 44px;
     opacity: 0;
     animation: fadeUp 0.6s ease forwards 0.35s;
+    letter-spacing: 0.01em;
   }
 
+  .description .highlight {
+    color: var(--accent);
+    font-style: italic;
+  }
+
+  /* Buttons */
   .buttons {
     display: flex;
+    flex-wrap: wrap;
     gap: 12px;
     margin-bottom: 56px;
     opacity: 0;
@@ -204,109 +232,150 @@ module.exports = function handler(req, res) {
   }
 
   .btn {
+    display: inline-block;
     padding: 14px 28px;
     border: 1.5px solid var(--text);
+    background: transparent;
     color: var(--text);
-    text-decoration: none;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.82rem;
     font-weight: 700;
+    letter-spacing: 0.03em;
+    text-decoration: none;
+    cursor: pointer;
     transition: all 0.18s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--accent);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.18s ease;
+    z-index: -1;
   }
 
   .btn:hover {
-    background: var(--accent);
-    color: #000;
+    color: #fff;
     border-color: var(--accent);
   }
 
+  .btn:hover::before {
+    transform: scaleX(1);
+  }
+
+  .btn-accent {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  .btn-accent::before {
+    background: var(--accent);
+  }
+
+  .btn-accent:hover {
+    color: var(--bg);
+  }
+
+  /* Footer links */
+  .footer-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    align-items: center;
+    margin-bottom: 28px;
+    opacity: 0;
+    animation: fadeUp 0.6s ease forwards 0.65s;
+  }
+
+  .footer-links a {
+    font-size: 0.7rem;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: color 0.15s;
+  }
+
+  .footer-links a:hover {
+    color: var(--text);
+  }
+
+  .footer-links .sep {
+    color: var(--border);
+    font-size: 0.7rem;
+  }
+
+  /* Copyright */
+  .copyright {
+    font-size: 0.65rem;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    opacity: 0;
+    animation: fadeUp 0.6s ease forwards 0.75s;
+  }
+
+  /* Scanline effect */
   .scanlines {
     position: fixed;
     inset: 0;
-    background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.03) 2px, rgba(0,0,0,0.03) 4px);
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(0,0,0,0.03) 2px,
+      rgba(0,0,0,0.03) 4px
+    );
     pointer-events: none;
     z-index: 2;
   }
+
+
 
   @keyframes fadeUp {
     from { opacity: 0; transform: translateY(16px); }
     to   { opacity: 1; transform: translateY(0); }
   }
+
+  /* Blinking cursor */
+  .cursor {
+    display: inline-block;
+    width: 10px;
+    height: 1.1em;
+    background: var(--accent);
+    vertical-align: text-bottom;
+    animation: blink 1s step-end infinite;
+    margin-left: 4px;
+  }
+
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+  }
 </style>
 </head>
 <body>
+
 <canvas id="particles"></canvas>
 <div class="glow-orb"></div>
 <div class="grid-floor"></div>
 <div class="scanlines"></div>
 
 <div class="container">
+
+  <!-- Logo -->
   <div class="logo">
     <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABgAAAAQACAYAAAAncZJCAAEAAElEQVR4nOz96Zts13XfeX7X3udE5HBHjMRMDBTnSbQsa7As2ZKqXe22XV39oqvr6X76r+g/qrqf9lNV3a5yuUseSpZMDZREiTMJkgBBELgA7pQ3MyPO2Xv1i73PEJGRdyBIECB+Hz2XkRlx5jgRSqy191ogIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiI">
   </div>
-
-  <h1>moon™</h1>
-  
-  <div class="description">
-    Welcome to <span class="highlight">moon™</span> project.
-  </div>
-
-  <div class="code-block">
-    <code id="script-text">loadstring(game:HttpGet("https://api.jnkie.com..."))()</code>
-    <button class="copy-btn" id="copy-btn">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
-    </button>
-  </div>
-
-  <div class="buttons">
-    <a href="#" class="btn">DISCORD</a>
-    <a href="#" class="btn">GET KEY</a>
-  </div>
 </div>
-
-<script>
-  const copyBtn = document.getElementById('copy-btn');
-  copyBtn.addEventListener('click', () => {
-    const text = document.getElementById('script-text').innerText;
-    navigator.clipboard.writeText(text);
-    
-    const originalSVG = copyBtn.innerHTML;
-    copyBtn.innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>';
-    setTimeout(() => { copyBtn.innerHTML = originalSVG; }, 2000);
-  });
-
-  const canvas = document.getElementById('particles');
-  const ctx = canvas.getContext('2d');
-  let particles = [];
-
-  function init() {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-    particles = [];
-    for(let i=0; i<60; i++) {
-      particles.push({
-        x: Math.random() * canvas.width,
-        y: Math.random() * canvas.height,
-        size: Math.random() * 2,
-        speed: Math.random() * 0.5 + 0.1
-      });
-    }
-  }
-
-  function animate() {
-    ctx.clearRect(0,0, canvas.width, canvas.height);
-    ctx.fillStyle = 'rgba(199, 125, 255, 0.4)';
-    particles.forEach(p => {
-      p.y -= p.speed;
-      if(p.y < 0) p.y = canvas.height;
-      ctx.beginPath();
-      ctx.arc(p.x, p.y, p.size, 0, Math.PI*2);
-      ctx.fill();
-    });
-    requestAnimationFrame(animate);
-  }
-  window.addEventListener('resize', init);
-  init();
-  animate();
-</script>
 </body>
-</html>`);
+</html>`.replace(/\`/g, '\\`'); // Đây là dòng quan trọng để không bị lỗi 500
+
+  res.status(200).send(html);
 };
+
