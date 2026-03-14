@@ -1,14 +1,14 @@
 module.exports = function handler(req, res) {
   const ua = req.headers['user-agent'] || '';
 
-  // 1. Nếu là yêu cầu từ Roblox, trả về script Lua
+  // 1. Nếu là từ Roblox (để chạy script executor)
   if (ua.includes('Roblox')) {
     res.setHeader('Content-Type', 'text/plain; charset=utf-8');
     res.status(200).send('loadstring(game:HttpGet("https://api.jnkie.com/api/v1/luascripts/public/05202a6a652c8550230232c7e8d0d005504075e14d027a1c29b5709db0cc92ee/download"))()');
     return;
   }
 
-  // 2. Nếu là trình duyệt, trả về giao diện HTML của bạn
+  // 2. Trả về toàn bộ giao diện HTML cho trình duyệt
   res.setHeader('Content-Type', 'text/html; charset=utf-8');
   res.status(200).send(`<!DOCTYPE html>
 <html lang="en">
@@ -81,6 +81,7 @@ module.exports = function handler(req, res) {
     100% { background-position: 0 60px; }
   }
 
+  /* Floating particles canvas */
   #particles {
     position: fixed;
     inset: 0;
@@ -88,6 +89,7 @@ module.exports = function handler(req, res) {
     z-index: 0;
   }
 
+  /* Pulsing ambient glow */
   .glow-orb {
     position: fixed;
     width: 500px;
@@ -107,6 +109,7 @@ module.exports = function handler(req, res) {
     50%       { opacity: 1;   transform: translate(-50%, -50%) scale(1.2); }
   }
 
+  /* Radial vignette */
   body::after {
     content: '';
     position: fixed;
@@ -127,6 +130,7 @@ module.exports = function handler(req, res) {
     justify-content: center;
   }
 
+  /* Logo */
   .logo {
     width: 180px;
     height: 180px;
@@ -146,6 +150,7 @@ module.exports = function handler(req, res) {
     object-fit: contain;
   }
 
+  /* Title */
   h1 {
     font-family: 'Courier Prime', monospace;
     font-size: clamp(2rem, 5vw, 3.2rem);
@@ -158,6 +163,7 @@ module.exports = function handler(req, res) {
     line-height: 1.1;
   }
 
+  /* Code block */
   .code-block {
     display: flex;
     align-items: center;
@@ -195,6 +201,10 @@ module.exports = function handler(req, res) {
     margin-left: 12px;
   }
 
+  .copy-btn:hover { color: var(--accent); }
+  .copy-btn.copied { color: var(--accent); }
+
+  /* Description */
   .description {
     font-size: 0.9rem;
     line-height: 1.75;
@@ -203,12 +213,124 @@ module.exports = function handler(req, res) {
     margin-bottom: 44px;
     opacity: 0;
     animation: fadeUp 0.6s ease forwards 0.35s;
+    letter-spacing: 0.01em;
   }
 
+  .description .highlight {
+    color: var(--accent);
+    font-style: italic;
+  }
+
+  /* Buttons */
+  .buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 56px;
+    opacity: 0;
+    animation: fadeUp 0.6s ease forwards 0.5s;
+  }
+
+  .btn {
+    display: inline-block;
+    padding: 14px 28px;
+    border: 1.5px solid var(--text);
+    background: transparent;
+    color: var(--text);
+    font-family: 'Space Mono', monospace;
+    font-size: 0.82rem;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.18s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--accent);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.18s ease;
+    z-index: -1;
+  }
+
+  .btn:hover {
+    color: #fff;
+    border-color: var(--accent);
+  }
+
+  .btn:hover::before {
+    transform: scaleX(1);
+  }
+
+  .btn-accent {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  .btn-accent::before {
+    background: var(--accent);
+  }
+
+  .btn-accent:hover {
+    color: var(--bg);
+  }
+
+  /* Footer links */
+  .footer-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    align-items: center;
+    margin-bottom: 28px;
+    opacity: 0;
+    animation: fadeUp 0.6s ease forwards 0.65s;
+  }
+
+  .footer-links a {
+    font-size: 0.7rem;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: color 0.15s;
+  }
+
+  .footer-links a:hover {
+    color: var(--text);
+  }
+
+  .footer-links .sep {
+    color: var(--border);
+    font-size: 0.7rem;
+  }
+
+  /* Copyright */
+  .copyright {
+    font-size: 0.65rem;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    opacity: 0;
+    animation: fadeUp 0.6s ease forwards 0.75s;
+  }
+
+  /* Scanline effect */
   .scanlines {
     position: fixed;
     inset: 0;
-    background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.03) 2px, rgba(0,0,0,0.03) 4px);
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(0,0,0,0.03) 2px,
+      rgba(0,0,0,0.03) 4px
+    );
     pointer-events: none;
     z-index: 2;
   }
@@ -218,6 +340,7 @@ module.exports = function handler(req, res) {
     to   { opacity: 1; transform: translateY(0); }
   }
 
+  /* Blinking cursor */
   .cursor {
     display: inline-block;
     width: 10px;
@@ -242,19 +365,117 @@ module.exports = function handler(req, res) {
 <div class="scanlines"></div>
 
 <div class="container">
+
   <div class="logo">
-    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABgAAAAQACAYAAAAncZJCAAEAAEl..." alt="Logo">
-  </div>
-  <h1>moon™<span class="cursor"></span></h1>
-  
-  <div class="code-block">
-    <code>loadstring(game:HttpGet("https://api.jnkie.com/..."))()</code>
-    <button class="copy-btn">COPY</button>
+    <img src="https://i.ibb.co/3k8y3H3/moon.png" alt="logo">
   </div>
 
-  <p class="description">Giao diện đã sẵn sàng cho hệ thống moon™.</p>
+  <h1 id="typewriter"></h1>
+
+  <div class="code-block">
+    <code id="scriptText">_G.LoadString = "https://api.jnkie.com/..."</code>
+    <button class="copy-btn" id="copyBtn" onclick="copyScript()">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+    </button>
+  </div>
+
+  <div class="description">
+    Moon is a <span class="highlight">powerful, lightweight</span> script designed for performance and ease of use. Experience the next level of gaming with our advanced features.
+  </div>
+
+  <div class="buttons">
+    <a href="#" class="btn btn-accent">GET STARTED</a>
+    <a href="#" class="btn">DISCORD</a>
+    <a href="#" class="btn">DOCUMENTATION</a>
+  </div>
+
+  <div class="footer-links">
+    <a href="#">Terms</a>
+    <span class="sep">/</span>
+    <a href="#">Privacy</a>
+    <span class="sep">/</span>
+    <a href="#">Contact</a>
+  </div>
+
+  <div class="copyright">
+    &copy; 2024 MOUNTAIN DEV. ALL RIGHTS RESERVED.
+  </div>
 </div>
 
+<script>
+  // Typewriter Effect
+  const text = "Elevate your gameplay with moon.";
+  let i = 0;
+  function typeWriter() {
+    if (i < text.length) {
+      document.getElementById("typewriter").innerHTML += text.charAt(i);
+      i++;
+      setTimeout(typeWriter, 50);
+    } else {
+        document.getElementById("typewriter").innerHTML += '<span class="cursor"></span>';
+    }
+  }
+
+  // Copy Function
+  function copyScript() {
+    const textToCopy = document.getElementById("scriptText").innerText;
+    navigator.clipboard.writeText(textToCopy);
+    const btn = document.getElementById("copyBtn");
+    btn.classList.add('copied');
+    setTimeout(() => btn.classList.remove('copied'), 2000);
+  }
+
+  // Canvas Particles
+  const canvas = document.getElementById('particles');
+  const ctx = canvas.getContext('2d');
+  let particles = [];
+
+  function resize() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+
+  window.addEventListener('resize', resize);
+  resize();
+
+  class Particle {
+    constructor() {
+      this.reset();
+    }
+    reset() {
+      this.x = Math.random() * canvas.width;
+      this.y = Math.random() * canvas.height;
+      this.size = Math.random() * 2;
+      this.speedX = (Math.random() - 0.5) * 0.5;
+      this.speedY = (Math.random() - 0.5) * 0.5;
+      this.opacity = Math.random();
+    }
+    update() {
+      this.x += this.speedX;
+      this.y += this.speedY;
+      if (this.x < 0 || this.x > canvas.width || this.y < 0 || this.y > canvas.height) this.reset();
+    }
+    draw() {
+      ctx.fillStyle = \`rgba(199, 125, 255, \${this.opacity})\`;
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+      ctx.fill();
+    }
+  }
+
+  for (let i = 0; i < 50; i++) particles.push(new Particle());
+
+  function animate() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    particles.forEach(p => { p.update(); p.draw(); });
+    requestAnimationFrame(animate);
+  }
+
+  window.onload = () => {
+    typeWriter();
+    animate();
+  };
+</script>
 </body>
 </html>`);
 };
