@@ -440,7 +440,7 @@ module.exports = function handler(req, res) {
     particles.forEach(p => {
       ctx.beginPath();
       ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(199,125,255,${p.alpha})`;
+      ctx.fillStyle = 'rgba(199,125,255,' + p.alpha + ')';
       ctx.shadowBlur = 6;
       ctx.shadowColor = 'rgba(199,125,255,0.8)';
       ctx.fill();
@@ -458,4 +458,8 @@ module.exports = function handler(req, res) {
   draw();
 </script>
 </body>
-</html>
+</html>`
+
+  res.setHeader("Content-Type", "text/html; charset=utf-8");
+  res.status(200).send(rawHtml);
+}
