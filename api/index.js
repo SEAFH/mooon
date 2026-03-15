@@ -11,200 +11,204 @@ export default function handler(req, res) {
   res.status(200).send(`<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>moon™</title>
-  <link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@800;900&family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet"/>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>moon™ | Home</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,600;0,9..40,700&family=Outfit:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    :root {
-      --purple: #a855f7; --purple-light: #c084fc; --purple-dim: #7c3aed;
-      --purple-glow: rgba(168, 85, 247, 0.35); --bg: #0a0a0f;
-      --border: rgba(168, 85, 247, 0.18); --text: #e2e8f0; --muted: #94a3b8;
-    }
-    html, body { min-height: 100%; background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; }
-    body::before {
-      content: ''; position: fixed; inset: 0;
-      background:
-        radial-gradient(ellipse 70% 55% at 50% 10%, rgba(120, 40, 220, 0.28) 0%, transparent 70%),
-        radial-gradient(ellipse 40% 35% at 20% 80%, rgba(90, 20, 180, 0.15) 0%, transparent 60%),
-        radial-gradient(ellipse 40% 35% at 80% 70%, rgba(160, 60, 240, 0.12) 0%, transparent 60%);
-      pointer-events: none; z-index: 0;
-    }
-    body::after {
-      content: ''; position: fixed; inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
-      background-size: 180px; pointer-events: none; z-index: 0; opacity: 0.5;
-    }
-    nav {
-      position: relative; z-index: 10; display: flex; align-items: center;
-      justify-content: space-between; padding: 18px 40px;
-      border-bottom: 1px solid var(--border); background: rgba(10, 10, 15, 0.6); backdrop-filter: blur(12px);
-    }
-    .nav-logo { display: flex; align-items: center; gap: 10px; font-family: 'Urbanist', sans-serif; font-size: 1.1rem; font-weight: 800; color: var(--text); text-decoration: none; }
-    .moon-icon { width: 28px; height: 28px; background: linear-gradient(135deg, var(--purple), var(--purple-dim)); border-radius: 50%; box-shadow: 0 0 14px var(--purple-glow); position: relative; overflow: hidden; }
-    .moon-icon::after { content: ''; position: absolute; top: 3px; right: 3px; width: 18px; height: 18px; background: var(--bg); border-radius: 50%; }
-    main { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; padding: 90px 20px 60px; text-align: center; }
-    .wordmark { font-family: 'Urbanist', sans-serif; font-size: clamp(4.5rem, 11vw, 8rem); font-weight: 900; line-height: 0.95; letter-spacing: -0.04em; background: linear-gradient(160deg, #d8b4fe 0%, var(--purple) 45%, var(--purple-dim) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; filter: drop-shadow(0 0 40px rgba(168, 85, 247, 0.5)); animation: fadeUp 0.7s ease both; }
-    .wordmark sup { font-size: 0.28em; vertical-align: super; letter-spacing: 0; opacity: 0.85; }
-    .tagline { margin-top: 22px; font-size: clamp(0.95rem, 2.2vw, 1.2rem); color: var(--muted); letter-spacing: 0.01em; animation: fadeUp 0.7s 0.1s ease both; }
-    #game-name { display: inline-block; color: var(--purple-light); font-weight: 500; transition: opacity 0.3s, transform 0.3s; }
-    #game-name.fade-out { opacity: 0; transform: translateY(-6px); }
-    .code-box { margin-top: 36px; display: flex; align-items: center; gap: 14px; background: rgba(20, 16, 35, 0.7); border: 1px solid var(--border); border-radius: 10px; padding: 14px 18px 14px 22px; backdrop-filter: blur(10px); box-shadow: 0 0 0 1px rgba(168, 85, 247, 0.06), inset 0 1px 0 rgba(255,255,255,0.04); animation: fadeUp 0.7s 0.2s ease both; max-width: 560px; width: 100%; }
-    .code-text { font-family: 'DM Mono', monospace; font-size: 0.82rem; color: #c4b5fd; white-space: normal; word-break: break-all; flex: 1; text-align: left; }
-    .code-text .kw { color: #7dd3fc; } .code-text .str { color: #a78bfa; }
-    .copy-btn { background: none; border: 1px solid var(--border); border-radius: 6px; width: 32px; height: 32px; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: border-color 0.2s, background 0.2s; color: var(--muted); }
-    .copy-btn:hover { border-color: var(--purple); background: rgba(168, 85, 247, 0.12); color: var(--purple-light); }
-    .btn-row { margin-top: 28px; display: flex; gap: 14px; flex-wrap: wrap; justify-content: center; animation: fadeUp 0.7s 0.3s ease both; }
-    .btn-primary { display: inline-block; text-decoration: none; background: linear-gradient(135deg, var(--purple) 0%, var(--purple-dim) 100%); color: #fff; border: none; border-radius: 8px; padding: 13px 30px; font-family: 'DM Sans', sans-serif; font-size: 0.95rem; font-weight: 700; cursor: pointer; box-shadow: 0 0 24px rgba(168, 85, 247, 0.5), 0 4px 14px rgba(0,0,0,0.3); transition: transform 0.15s, box-shadow 0.15s; }
-    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 0 36px rgba(168, 85, 247, 0.7), 0 6px 20px rgba(0,0,0,0.35); }
-    .btn-secondary { background: transparent; color: var(--text); border: 1px solid rgba(168, 85, 247, 0.4); border-radius: 8px; padding: 13px 30px; font-family: 'DM Sans', sans-serif; font-size: 0.95rem; font-weight: 600; cursor: pointer; transition: border-color 0.2s, background 0.2s, transform 0.15s; }
-    .btn-secondary:hover { border-color: var(--purple); background: rgba(168, 85, 247, 0.08); transform: translateY(-2px); }
-    .keyless-note { margin-top: 14px; font-size: 0.82rem; font-weight: 700; color: var(--purple-light); letter-spacing: 0.04em; text-transform: lowercase; animation: fadeUp 0.7s 0.35s ease both; }
-    .games-section { position: relative; z-index: 1; max-width: 780px; margin: 0 auto; padding: 60px 20px 20px; text-align: center; }
-    .games-title { font-family: 'Urbanist', sans-serif; font-size: 2rem; font-weight: 900; color: var(--text); letter-spacing: -0.02em; margin-bottom: 10px; }
-    .games-sub { font-size: 0.9rem; color: var(--muted); margin-bottom: 36px; }
-    .games-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 12px; }
-    .game-card { background: rgba(20, 16, 35, 0.6); border: 1px solid var(--border); border-radius: 10px; padding: 16px 18px; font-family: 'DM Sans', sans-serif; font-size: 0.9rem; font-weight: 600; color: var(--text); backdrop-filter: blur(8px); transition: border-color 0.2s, transform 0.15s, background 0.2s; }
-    .game-card:hover { border-color: var(--purple); background: rgba(168, 85, 247, 0.08); transform: translateY(-2px); }
-    .faq-section { position: relative; z-index: 1; max-width: 780px; margin: 0 auto; padding: 60px 20px 80px; text-align: center; }
-    .faq-title { font-family: 'Urbanist', sans-serif; font-size: 2rem; font-weight: 900; color: var(--text); letter-spacing: -0.02em; margin-bottom: 10px; }
-    .faq-sub { font-size: 0.9rem; color: var(--muted); margin-bottom: 36px; }
-    .faq-link { color: var(--purple-light); text-decoration: none; }
-    .faq-link:hover { text-decoration: underline; }
-    .faq-list { display: flex; flex-direction: column; gap: 12px; text-align: left; }
-    .faq-item { width: 100%; }
-    .faq-btn { width: 100%; display: flex; align-items: center; justify-content: space-between; background: rgba(20, 16, 35, 0.6); border: 1px solid var(--border); border-radius: 10px; padding: 18px 22px; color: var(--text); font-family: 'DM Sans', sans-serif; font-size: 0.95rem; font-weight: 700; cursor: pointer; transition: border-color 0.2s, background 0.2s; backdrop-filter: blur(8px); }
-    .faq-btn:hover { border-color: var(--purple); background: rgba(168, 85, 247, 0.06); }
-    .faq-arrow { color: var(--purple); font-size: 0.75rem; transition: transform 0.25s; flex-shrink: 0; }
-    .faq-btn.open .faq-arrow { transform: rotate(180deg); }
-    .faq-answer { display: grid; grid-template-rows: 0fr; transition: grid-template-rows 0.3s ease, padding 0.3s ease; overflow: hidden; font-size: 0.875rem; color: var(--muted); border: 1px solid var(--border); border-top: none; border-radius: 0 0 10px 10px; background: rgba(14, 10, 25, 0.5); line-height: 1.6; padding: 0 22px; }
-    .faq-answer > div { overflow: hidden; }
-    .faq-answer.open { grid-template-rows: 1fr; padding: 14px 22px 18px; }
-    footer { position: relative; z-index: 1; border-top: 1px solid var(--border); padding: 28px 40px 36px; }
-    .footer-top { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; margin-bottom: 20px; }
-    .footer-logo { display: flex; align-items: center; gap: 8px; font-family: 'Urbanist', sans-serif; font-size: 0.95rem; font-weight: 800; color: var(--text); }
-    .footer-logo .moon-icon { width: 22px; height: 22px; }
-    .footer-logo .moon-icon::after { width: 14px; height: 14px; top: 2px; right: 2px; }
-    .footer-powered { font-size: 0.82rem; color: var(--muted); }
-    .footer-brand { color: var(--purple-light); font-weight: 700; }
-    .footer-divider { height: 1px; background: var(--border); margin-bottom: 20px; }
-    .footer-legal { text-align: center; }
-    .footer-legal-title { font-size: 0.8rem; font-weight: 700; color: var(--text); margin-bottom: 8px; }
-    .footer-legal p { font-size: 0.72rem; color: rgba(148, 163, 184, 0.45); line-height: 1.6; margin-bottom: 4px; }
-    @keyframes fadeUp { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
-    .particles { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
-    .particle { position: absolute; border-radius: 50%; background: radial-gradient(circle, rgba(168,85,247,0.6) 0%, transparent 70%); animation: float linear infinite; }
-    @keyframes float { from { transform: translateY(110vh) scale(0.5); opacity: 0; } 10% { opacity: 1; } 90% { opacity: 0.6; } to { transform: translateY(-10vh) scale(1.2); opacity: 0; } }
+:root{
+  --bg:#0a0812;
+  --bg-deep:#05050a;
+  --card:#12101b;
+  --text:#f2f0fb;
+  --muted:#a7a3bc;
+  --accent:#b18cff;
+  --accent-2:#6f5bff;
+  --border:rgba(177,140,255,0.25);
+  --radius:14px;
+  --font-sans:"DM Sans",system-ui,sans-serif;
+  --font-display:"Outfit",sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+a{color:inherit;text-decoration:none}
+html{scroll-behavior:smooth}
+body{
+  font-family:var(--font-sans);
+  color:var(--text);
+  background:
+    radial-gradient(1200px 600px at 10% 10%, rgba(126,92,255,0.18), transparent 60%),
+    radial-gradient(900px 500px at 90% 20%, rgba(255,255,255,0.08), transparent 55%),
+    linear-gradient(180deg, var(--bg) 0%, var(--bg-deep) 100%);
+  min-height:100vh;
+  overflow-x:hidden;
+}
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  background-image:
+    linear-gradient(rgba(177,140,255,0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(177,140,255,0.08) 1px, transparent 1px),
+    radial-gradient(2px 2px at 20% 30%, rgba(255,255,255,0.25), transparent 60%),
+    radial-gradient(1px 1px at 70% 20%, rgba(255,255,255,0.2), transparent 60%),
+    radial-gradient(2px 2px at 80% 75%, rgba(255,255,255,0.18), transparent 60%);
+  background-size:48px 48px,48px 48px,auto,auto,auto;
+  animation:drift 28s linear infinite;
+  opacity:0.65;
+  pointer-events:none;
+  z-index:0;
+}
+body::after{
+  content:"";
+  position:fixed;
+  inset:-10% 0 0 0;
+  background:radial-gradient(400px 200px at 60% 10%, rgba(177,140,255,0.2), transparent 70%);
+  animation:float 12s ease-in-out infinite;
+  pointer-events:none;
+  z-index:0;
+}
+@keyframes drift{from{background-position:0 0,0 0,0 0,0 0,0 0}to{background-position:240px 240px,240px 240px,0 0,0 0,0 0}}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(18px)}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+.reveal{opacity:0;transform:translateY(16px);animation:fadeUp .7s ease forwards}
+.reveal.delay-1{animation-delay:.15s}
+.reveal.delay-2{animation-delay:.3s}
+.reveal.delay-3{animation-delay:.45s}
+
+.header{position:sticky;top:0;z-index:10;background:rgba(8,7,14,0.8);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
+.nav{max-width:1100px;margin:0 auto;padding:1rem 1.5rem;display:flex;align-items:center;justify-content:space-between}
+.logo{font-family:var(--font-display);font-weight:700;font-size:1.25rem;letter-spacing:.02em;color:var(--accent);text-shadow:0 0 12px rgba(177,140,255,0.35)}
+.nav-links{display:flex;list-style:none;gap:1.75rem}
+.nav-links a{color:var(--muted);font-weight:600;transition:color .2s}
+.nav-links a:hover,.nav-links a.active{color:var(--accent);text-shadow:0 0 10px rgba(177,140,255,0.4)}
+.nav-links a.active{font-weight:700}
+.menu-btn{display:none;background:none;border:1px solid var(--border);color:var(--text);padding:.4rem .7rem;border-radius:10px;cursor:pointer}
+
+.main{position:relative;z-index:1;max-width:1100px;margin:0 auto;padding:4rem 1.5rem 5rem}
+.hero{display:grid;grid-template-columns:1.2fr .8fr;gap:2.5rem;align-items:center}
+.hero h1{font-family:var(--font-display);font-size:clamp(2.2rem,4vw,3.2rem);line-height:1.1;margin-bottom:1rem}
+.hero h1 .brand{color:var(--accent)}
+.hero p{color:var(--muted);max-width:520px}
+.hero-actions{margin-top:1.5rem;display:flex;gap:1rem;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:.5rem;padding:.8rem 1.4rem;border-radius:12px;font-weight:700;transition:transform .2s,box-shadow .2s,border-color .2s}
+.btn-primary{background:linear-gradient(135deg,var(--accent),var(--accent-2));color:#120e1f;box-shadow:0 8px 24px rgba(120,88,255,0.35)}
+.btn-outline{border:1px solid var(--border);color:var(--text)}
+.btn:hover{transform:translateY(-2px)}
+.hero-panel{background:linear-gradient(135deg,rgba(18,16,27,0.9),rgba(10,8,18,0.7));border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem}
+.hero-panel h3{font-family:var(--font-display);margin-bottom:.4rem}
+.hero-panel p{color:var(--muted);font-size:.95rem}
+
+.section{margin-top:4rem}
+.section-title{font-family:var(--font-display);font-size:clamp(1.6rem,3vw,2.2rem);margin-bottom:1.2rem}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1.2rem}
+.card{background:rgba(18,16,27,0.8);border:1px solid var(--border);border-radius:var(--radius);padding:1.25rem;transition:transform .2s,border-color .2s,box-shadow .2s}
+.card:hover{transform:translateY(-4px);border-color:rgba(177,140,255,0.6);box-shadow:0 10px 30px rgba(7,6,12,0.45)}
+.card h4{font-family:var(--font-display);margin-bottom:.35rem}
+.card p{color:var(--muted);font-size:.92rem}
+
+.callout{margin-top:3rem;background:linear-gradient(135deg,rgba(177,140,255,0.15),rgba(110,80,255,0.08));border:1px solid var(--border);border-radius:16px;padding:1.6rem;display:flex;justify-content:space-between;align-items:center;gap:1.5rem}
+.callout p{color:var(--muted)}
+
+.footer{border-top:1px solid var(--border);padding:1.5rem;text-align:center;color:var(--muted)}
+
+@media (max-width:900px){
+  .hero{grid-template-columns:1fr}
+}
+@media (max-width:768px){
+  .nav-links{display:none}
+  .menu-btn{display:inline-flex}
+  .callout{flex-direction:column;align-items:flex-start}
+}
+@media (prefers-reduced-motion:reduce){
+  body::before,body::after{animation:none}
+  .reveal{animation:none;opacity:1;transform:none}
+}
   </style>
 </head>
 <body>
-  <div class="particles" id="particles"></div>
-  <nav>
-    <a class="nav-logo" href="#">
-      <div class="moon-icon"></div>
-      moon™
-    </a>
-  </nav>
-  <main>
-    <h1 class="wordmark">moon<sup>™</sup></h1>
-    <p class="tagline">the only <span id="game-name">The Forge</span> script you'll need</p>
-    <div class="code-box">
-      <span class="code-text">
-        <span class="kw">loadstring</span>(game:<span class="kw">HttpGet</span>(<span class="str">"https://getmoonhub.vercel.app"</span>))()
-      </span>
-      <button class="copy-btn" title="Copy" onclick="copyCode(this)">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
-        </svg>
-      </button>
-    </div>
-    <div class="btn-row">
-      <a href="https://jnkie.com/flow/56bf490f-de1f-4312-8638-f965b86fb982" target="_blank" class="btn-primary">get key</a>
-      <button class="btn-secondary" onclick="document.getElementById('games').scrollIntoView({behavior:'smooth'})">request a game</button>
-    </div>
-    <p class="keyless-note">get key fast and easy</p>
+  <header class="header">
+    <nav class="nav">
+      <a class="logo" href="index.html">moon™</a>
+      <ul class="nav-links">
+        <li><a href="index.html" class="active">Home</a></li>
+        <li><a href="features.html">Features</a></li>
+        <li><a href="faq.html">FAQ</a></li>
+        <li><a href="support.html">Support</a></li>
+      </ul>
+      <button class="menu-btn" aria-label="Open menu">Menu</button>
+    </nav>
+  </header>
+
+  <main class="main">
+    <section class="hero">
+      <div class="reveal">
+        <p class="section-title" style="margin-bottom:.4rem;color:var(--muted)">Welcome to</p>
+        <h1><span class="brand">moon™</span></h1>
+        <p>Fast, clean, and built for smooth control. Explore features, read the FAQ, or jump into support.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="features.html">Explore Features</a>
+          <a class="btn btn-outline" href="support.html">Get Support</a>
+        </div>
+      </div>
+      <div class="hero-panel reveal delay-1">
+        <h3>Quick Start</h3>
+        <p>Use the navigation to see Features, FAQ, and Support. Everything is optimized for speed and clarity.</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title reveal">Why moon™</h2>
+      <div class="grid">
+        <article class="card reveal delay-1">
+          <h4>Performance</h4>
+          <p>Lightweight UI with smooth transitions and efficient layout.</p>
+        </article>
+        <article class="card reveal delay-2">
+          <h4>Clarity</h4>
+          <p>Simple structure that stays readable on desktop and mobile.</p>
+        </article>
+        <article class="card reveal delay-3">
+          <h4>Control</h4>
+          <p>Designed for quick access to your most important pages.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="callout reveal">
+      <div>
+        <h3 style="font-family:var(--font-display)">Need help right now?</h3>
+        <p>Check the FAQ or open Support for direct guidance.</p>
+      </div>
+      <a class="btn btn-primary" href="faq.html">Go to FAQ</a>
+    </section>
   </main>
-  <section class="games-section" id="games">
-    <h2 class="games-title">supported games</h2>
-    <p class="games-sub">All games currently supported by moon™</p>
-    <div class="games-grid">
-      <div class="game-card">🎣 Ficsh</div>
-      <div class="game-card">⚔️ Blox Fruits</div>
-      <div class="game-card">🚂 Dead Rails</div>
-      <div class="game-card">🌲 99 Night In The Forest</div>
-      <div class="game-card">🧠 Steal a Brainrot</div>
-      <div class="game-card">🌸 Garden Horizon</div>
-      <div class="game-card">🚪 Doors</div>
-      <div class="game-card">⚒️ The Forge</div>
-    </div>
-  </section>
-  <section class="faq-section">
-    <h2 class="faq-title">faq</h2>
-    <p class="faq-sub">The full FAQ is in the <a href="#" class="faq-link">Discord Server</a></p>
-    <div class="faq-list">
-      <div class="faq-item">
-        <button class="faq-btn" onclick="toggleFaq(this)"><span>how do i get a key?</span><span class="faq-arrow">▼</span></button>
-        <div class="faq-answer"><div>Click the "get key" button above and complete the steps to receive your key.</div></div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-btn" onclick="toggleFaq(this)"><span>does this work on mobile?</span><span class="faq-arrow">▼</span></button>
-        <div class="faq-answer"><div>Mobile support depends on your executor. Check our Discord for the latest compatibility info.</div></div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-btn" onclick="toggleFaq(this)"><span>what games are supported?</span><span class="faq-arrow">▼</span></button>
-        <div class="faq-answer"><div>We support a wide range of games. Use the "request a game" button to suggest new ones.</div></div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-btn" onclick="toggleFaq(this)"><span>how do i review the script?</span><span class="faq-arrow">▼</span></button>
-        <div class="faq-answer"><div>Join our Discord server to leave feedback and reviews for the script.</div></div>
-      </div>
-    </div>
-  </section>
-  <footer>
-    <div class="footer-top">
-      <div class="footer-logo"><div class="moon-icon"></div>moon™</div>
-      <span class="footer-powered">site powered by <span class="footer-brand">moon™</span></span>
-    </div>
-    <div class="footer-divider"></div>
-    <div class="footer-legal">
-      <p class="footer-legal-title">Important Legal Disclaimer</p>
-      <p>moon™ is an independent third-party service and is not related to cheating, hacking, or any violations of Roblox Terms of Service.</p>
-      <p>All product names, logos, and brands are property of their respective owners.</p>
-    </div>
-  </footer>
+
+  <footer class="footer">© 2025 moon™.</footer>
+
   <script>
-    const games = ['The Forge', 'Ficsh', 'Blox Fruits', 'Dead Rails', '99 Night In The Forest', 'Steal a Brainrot', 'Garden Horizon', 'Doors'];
-    let gameIndex = 0;
-    const gameEl = document.getElementById('game-name');
-    setInterval(() => {
-      gameEl.classList.add('fade-out');
-      setTimeout(() => {
-        gameIndex = (gameIndex + 1) % games.length;
-        gameEl.textContent = games[gameIndex];
-        gameEl.classList.remove('fade-out');
-      }, 300);
-    }, 2000);
-    function toggleFaq(btn) {
-      btn.classList.toggle('open');
-      btn.nextElementSibling.classList.toggle('open');
+  (function(){
+    var menuBtn = document.querySelector('.menu-btn');
+    var navLinks = document.querySelector('.nav-links');
+    if(menuBtn && navLinks){
+      menuBtn.addEventListener('click', function(){
+        var isOpen = navLinks.style.display === 'flex';
+        navLinks.style.display = isOpen ? 'none' : 'flex';
+        if(!isOpen){
+          navLinks.style.flexDirection = 'column';
+          navLinks.style.position = 'absolute';
+          navLinks.style.top = '100%';
+          navLinks.style.right = '1.5rem';
+          navLinks.style.background = '#0f0c18';
+          navLinks.style.padding = '0.75rem 1rem';
+          navLinks.style.border = '1px solid rgba(177,140,255,0.25)';
+          navLinks.style.borderRadius = '12px';
+          navLinks.style.gap = '0.75rem';
+        }
+      });
     }
-    function copyCode(btn) {
-      navigator.clipboard.writeText('loadstring(game:HttpGet("https://moon-hub-eight.vercel.app"))()');
-      btn.innerHTML = \`<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#a855f7" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>\`;
-      setTimeout(() => {
-        btn.innerHTML = \`<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>\`;
-      }, 2000);
-    }
-    const container = document.getElementById('particles');
-    for (let i = 0; i < 18; i++) {
-      const p = document.createElement('div');
-      p.className = 'particle';
-      const size = Math.random() * 6 + 2;
-      p.style.cssText = \`width:\${size}px;height:\${size}px;left:\${Math.random()*100}%;animation-duration:\${Math.random()*18+12}s;animation-delay:\${Math.random()*-20}s;opacity:\${Math.random()*0.5+0.2}\`;
-      container.appendChild(p);
-    }
+  })();
   </script>
 </body>
-</html>`);
-}
+</html>
